@@ -103,6 +103,9 @@ import {
 # RT2
 resource "aws_route_table" "XPIX-rtb-private1-us-east-1a" {
     vpc_id = aws_vpc.XPIX-vpc.id
+    tags = {
+      Name = "XPIX-rtb-private1-us-east-1a"
+    }
 }
 
 import {
@@ -112,6 +115,9 @@ import {
 # RT3
 resource "aws_route_table" "XPIX-rtb-private2-us-east-1b" {
     vpc_id = aws_vpc.XPIX-vpc.id
+    tags = {
+      Name = "XPIX-rtb-private2-us-east-1b"
+    }
 }
 
 import {
@@ -137,6 +143,7 @@ import {
   to = aws_route_table_association.public-subnet2-rta
   id = "subnet-0296d790f8422f280/rtb-0709a8a8a0e0bf447"
 }
+
 # One RTA for each of the two private subnets routing to their own route table.
 
 resource "aws_route_table_association" "private-subnet1-rta" {
@@ -148,22 +155,23 @@ import {
   to = aws_route_table_association.private-subnet1-rta
   id = "subnet-0850e1b345b723e4b/rtb-0925bd22623f99872"
 }
-resource "aws_route_table_association" "private-subnet2-rta" {
-  subnet_id = aws_route_table.XPIX-rtb-private2-us-east-1b.id
-  route_table_id = "rtb-0a02fffac4634693e"
-}
 
-import {
-  to = aws_route_table_association.private-subnet2-rta
-  id = "subnet-0d7aee48de93f1cb3/rtb-0a02fffac4634693e"
-} 
+// I took this out as it didn't match my infrastructure... appparently. 
+# resource "aws_route_table_association" "private-subnet2-rta" {
+#   subnet_id = aws_route_table.XPIX-rtb-private2-us-east-1b.id
+#   route_table_id = "rtb-0a02fffac4634693e"
+# }
+
+# import {
+#   to = aws_route_table_association.private-subnet2-rta
+#   id = "subnet-0d7aee48de93f1cb3/rtb-0a02fffac4634693e"
+# } 
+
 resource "aws_security_group" "xpix-app-server" {
   name = "xpix-app-server"
   description = "This allows XPix app server connections."
   vpc_id = aws_vpc.XPIX-vpc.id
-  tags = {
-    Name = "xpix-app-server"
-  }
+
 }
 
 import {
@@ -172,6 +180,7 @@ import {
 }
 resource "aws_vpc_security_group_ingress_rule" "xpix-app-server-ingress" {
   security_group_id = aws_security_group.xpix-app-server.id
+  description = "Allows SSH from anywhere."
 
   cidr_ipv4 = "0.0.0.0/0"
   from_port = 22
