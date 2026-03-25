@@ -93,3 +93,27 @@ resource "aws_cognito_user_pool" "the_cognito_user_pool" {
     default_email_option = "CONFIRM_WITH_CODE"
   }
 }
+
+resource "aws_ssm_parameter" "the_cognito_user_pool_id" {
+
+  name = "/app/cognito/user_pool_id"
+  type = "String"
+  value = aws_cognito_user_pool.the_cognito_user_pool.id
+}
+
+import {
+  to = aws_ssm_parameter.the_cognito_user_pool_id
+  id = "/app/cognito/user_pool_id"
+}
+
+resource "aws_ssm_parameter" "the_cognito_client_id" {
+
+  name = "/app/cognito/client_id"
+  type = "String"
+  value = aws_cognito_user_pool_client.the_cognito_user_pool_client
+}
+
+import {
+  to = aws_ssm_parameter.the_cognito_client_id
+  id = "/app/cognito/client_id"
+}
