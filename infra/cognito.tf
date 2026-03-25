@@ -99,6 +99,7 @@ resource "aws_ssm_parameter" "the_cognito_user_pool_id" {
   name = "/app/cognito/user_pool_id"
   type = "String"
   value = aws_cognito_user_pool.the_cognito_user_pool.id
+  # version = 2
 }
 
 import {
@@ -110,10 +111,18 @@ resource "aws_ssm_parameter" "the_cognito_client_id" {
 
   name = "/app/cognito/client_id"
   type = "String"
-  value = aws_cognito_user_pool_client.the_cognito_user_pool_client
+  value = aws_cognito_user_pool_client.the_cognito_user_pool_client.id 
+  # version = 1
 }
 
 import {
   to = aws_ssm_parameter.the_cognito_client_id
   id = "/app/cognito/client_id"
+}
+
+output "the_public_ip" {
+  # value = aws_instance.web.public_ip
+  # value = aws_instance.public_ip
+  # value = the_ec2_instance.public_ip
+  value = aws_instance.the_ec2_instance.public_ip
 }
