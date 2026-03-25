@@ -14,17 +14,16 @@ provider "aws" {
 }
 
 
-
 // Cognito stuff.
 
-# // User pool.
-# import {
-#   to = 
-#   id = "us-east-1_uWfXDQ5gw"
-# }
+// 10:59 Running this has 2 import, 0,0,0
 
-# // Client 1
-# import {
-#   to = 
-#   id = "6c7r5l0rk1jk70cvs4a657agdj"
-# }
+import {
+  to = aws_cognito_user_pool.the_cognito_user_pool
+  id = "us-east-1_uWfXDQ5gw"
+}
+
+import {
+  to = aws_cognito_user_pool_client.the_cognito_user_pool_client
+  id = "us-east-1_uWfXDQ5gw/6c7r5l0rk1jk70cvs4a657agdj"
+}
