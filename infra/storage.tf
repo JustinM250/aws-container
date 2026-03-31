@@ -77,7 +77,7 @@ resource "aws_dynamodb_table" "the_dynamo_table" {
     # 1.4.2. One named '/app/dynamodb/photos_table_name’ with a reference to your DynamoDB table (use the ‘name’ attribute) as the value.
 
 resource "aws_ssm_parameter" "storage_ssm_parameter1" {
-    name = "/app/s3//photos_bucket_name"
+    name = "/app/s3/photos_bucket_name"
     type = "String"
     value = aws_s3_bucket.the_s3_bucket.bucket
 }
