@@ -10,6 +10,11 @@ resource "aws_s3_bucket" "the_s3_bucket"{
     }
 }
 
+import {
+  to =  aws_s3_bucket.the_s3_bucket
+  id = "xpix-photos-26w-25014394saultcollege"
+}
+
 # 1.3.1. Name: xpix-photos
 # 1.3.2. Billing mode: PAY_PER_REQUEST
 # 1.3.3. Hash key: photo_id
@@ -70,6 +75,11 @@ resource "aws_dynamodb_table" "the_dynamo_table" {
       key_type = "RANGE"
     }
   }
+}
+
+import {
+  to = aws_dynamodb_table.the_dynamo_table
+  id = "xpix_photos"
 }
 
 # 1.4. Two String SSM Parameters:
